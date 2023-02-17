@@ -6,9 +6,10 @@ param subnetBastionAdress string = '10.50.50.0/26'
 param vmSizeName string = 'Standard_B2s'
 param vmDiskType string = 'StandardSSD_LRS'
 param vmAdminUser string = 'david'
-param keyVaultName string = 'KeyVault-DavidGonzalez'
 
 // VARIABLES
+var keyVaultRGName = 'RG-David-KeyVault'
+var keyVaultName = 'KeyVault-DavidGonzalez'
 var vnetName = 'vnet-A'
 var subnetName = 'default'
 var bastionName = 'bastion'
@@ -23,6 +24,7 @@ var tags = {
 // RESOURCES
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: keyVaultName
+  scope: resourceGroup(keyVaultRGName)
 }
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
